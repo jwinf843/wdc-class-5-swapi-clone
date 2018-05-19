@@ -29,3 +29,6 @@ makemigrations:
 createsuperuser:
 	@echo $(TAG)Create Superuser$(END)
 	$(call django-command, createsuperuser)
+
+test:
+	PYTHONPATH=$(PYTHONPATH) DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS) python main.py

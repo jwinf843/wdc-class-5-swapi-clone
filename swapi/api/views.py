@@ -9,6 +9,7 @@ from api.fixtures import SINGLE_PEOPLE_OBJECT, PEOPLE_OBJECTS
 from api.serializers import serialize_people_as_json
 
 
+
 def single_people(request):
     return JsonResponse(SINGLE_PEOPLE_OBJECT)
 
@@ -35,7 +36,24 @@ def people_list_view(request):
 
         * If submited payload is nos JSON valid, return a `400` response.
     """
-    pass
+    if request.method == 'GET':
+        people = People.objects.all()
+        results = []
+    
+        for person in people:
+            char_dict = {
+            'name' : person.name,
+            'homeworld' : person.homeworld.name,
+            'height' : person.height,
+            'mass' : person.mass,
+            }
+            
+            results.append(char_dict)
+        
+        return JsonResponse(results, safe=False)
+    
+    elif request.method == 'POST':
+        pass
 
 
 @csrf_exempt
