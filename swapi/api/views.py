@@ -53,7 +53,19 @@ def people_list_view(request):
         return JsonResponse(results, safe=False)
     
     elif request.method == 'POST':
-        pass
+        data = json.loads(request.body.decode('utf-8'))
+        
+        if Planet.objects.filter(name=data['homeworld']).count() != 1:
+            print('You are a failure')
+            
+            return JsonResponse({'Catastrophic Failure': True}, safe=False)
+        else:
+            planet = Planet.objects.get(name=data['homeworld'])
+            result = People.objects.create(name = data["name"], homeworld = planet, height = data["height"], mass= data["mass"])
+            print('Your object has been created')
+            
+            
+            return JsonResponse({'Planet Created': True}, safe=False)
 
 
 @csrf_exempt

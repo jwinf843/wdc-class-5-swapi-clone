@@ -27,7 +27,7 @@ result_expected_0 = {
 }
 
 '''
-
+"""
 def exercise_1(people):
     results = []
     
@@ -42,7 +42,10 @@ def exercise_1(people):
         results.append(char_dict)
     
     return results
-    
+"""    
+
+"""
+
     
 result_1 = exercise_1(people)
 print(result_1)
@@ -70,3 +73,25 @@ result_example = [{
     'height': '....',
     'mass': '...'
 }]
+
+"""
+data = {
+ "name": "Santiago",
+ "homeworld" : "Tatooine",
+ "height" : 185,
+ "mass" : 96,
+}
+'''
+try:
+    planet = Planet.objects.get(name=data["homeworld"])        
+    result = People.objects.create(name = data["name"], homeworld = planet, height = data["height"], mass= data["mass"])
+    print('It actually worked')
+    
+except Planet.DoesNotExist:
+    print('you are a failure')
+'''
+    
+if Planet.objects.filter(name=data['homeworld']).count() != 1:
+    print('You are a failure')
+else:
+    result = People.objects.create(name = data["name"], homeworld = planet, height = data["height"], mass= data["mass"])
